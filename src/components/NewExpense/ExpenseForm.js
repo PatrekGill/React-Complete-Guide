@@ -5,6 +5,7 @@ const ExpenseForm = (props) => {
 	const [enteredTitle, setEnteredTitle] = useState("");
 	const [enteredDate, setEnteredDate] = useState("");
 	const [enteredAmount, setEnteredAmount] = useState("");
+	const [showingForm, setShowingForm] = useState(false);
 
 	const titleChangeHandler = (event) => {
 		setEnteredTitle(event.target.value);
@@ -15,45 +16,56 @@ const ExpenseForm = (props) => {
 	const amountChangeHandler = (event) => {
 		setEnteredAmount(event.target.value);
 	};
+	const showingFormHandler = (event) => {
+		setShowingForm((currentState) => !currentState);
+	};
 
+	if (!showingForm) {
+		return (
+			<div className="new-expense__actions-center">
+				<button type="button" onClick={showingFormHandler}>Add Expense</button>
+			</div>
+		);
+	}
 
-	/// Alternative Method of merging into one handler
-	// const [userInput, setUserInput] = useState(
-	// 	{
-	// 		enteredTitle: '',
-	// 		eneteredDate: '',
-	// 		enteredAmount: ''
-	// 	}
-	// )
+/*
+	//Alternative Method of merging into one handler
+	const [userInput, setUserInput] = useState(
+		{
+			enteredTitle: '',
+			eneteredDate: '',
+			enteredAmount: ''
+		}
+	)
 
-	// const titleChangeHandler = (event) => {
-	// 	setUserInput( (prevState) => {
-	// 		return {...prevState, enteredTitle: event.target.value};
-	// 	});
-	// };
-	// const dateChangeHandler = (event) => {
-	// 	setUserInput(
-	// 		{
-	// 			...userInput,
-	// 			eneteredDate: event.target.value
-	// 		}
-	// 	);
-	// };
-	// const amountChangeHandler = (event) => {
-	// 	setUserInput(
-	// 		{
-	// 			...userInput,
-	// 			enteredAmount: event.target.value
-	// 		}
-	// 	);
-	// };
-
+	const titleChangeHandler = (event) => {
+		setUserInput( (prevState) => {
+			return {...prevState, enteredTitle: event.target.value};
+		});
+	};
+	const dateChangeHandler = (event) => {
+		setUserInput(
+			{
+				...userInput,
+				eneteredDate: event.target.value
+			}
+		);
+	};
+	const amountChangeHandler = (event) => {
+		setUserInput(
+			{
+				...userInput,
+				enteredAmount: event.target.value
+			}
+		);
+	};
+*/
 	const submitHandler = (event) => {
 		event.preventDefault();
 
 		const expenseData = {
 			title: enteredTitle,
-			amount: enteredAmount,
+			amount: +enteredAmount,
 			date: new Date(enteredDate)
 		};
 
@@ -61,8 +73,9 @@ const ExpenseForm = (props) => {
 		setEnteredTitle(""); // reset form after submit
 		setEnteredAmount("");
 		setEnteredDate("");
+		showingFormHandler();
 	};
-
+	
 	return (
 		<form onSubmit={submitHandler}>
 			<div className="new-expense__controls">
@@ -85,6 +98,7 @@ const ExpenseForm = (props) => {
 			</div>
 
 			<div className="new-expense__actions">
+				<button type="button" onClick={showingFormHandler}>Cancel</button>
 				<button type="submit">Add Expense</button>
 			</div>
 		</form>

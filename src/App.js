@@ -38,7 +38,7 @@ function App() {
         <div>
             {/* <h2>Let's get started!</h2>
             <h1>This is something</h1> */}
-			<NewExpense onAddExpense={addExpenseHandler} />
+			<NewExpense onAddExpense={addExpenseHandler}/>
 			<Expenses items={expenses} />
             
         </div>

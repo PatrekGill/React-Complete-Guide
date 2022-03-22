@@ -25,8 +25,6 @@ const cartReducer = (state, action) => {
         const updatedTotalAmount =
             state.totalAmount + action.item.price * action.item.amount;
 
-		console.log("Total Updated Up");
-		console.log(updatedTotalAmount);
         return {
             items: updatedItems,
             totalAmount: updatedTotalAmount,
@@ -43,24 +41,18 @@ const cartReducer = (state, action) => {
 
         if (existingItemIndex >= 0) {
             const existingItem = state.items.at(existingItemIndex);
-            console.log("Existing Item");
-            console.log(existingItem);
             existingItem.amount--;
 
             if (existingItem.amount <= 0) {
                 updatedItems = state.items.filter(
                     (element, index) => index !== existingItemIndex
                 );
-                console.log("Performed Filter: ");
-                console.log("State Items");
-                console.log(state.items);
+
             }
 
             updatedTotalAmount = state.totalAmount - existingItem.price;
         }
 
-        console.log("Updated Items");
-        console.log(updatedItems);
         return {
             items: updatedItems,
             totalAmount: updatedTotalAmount,

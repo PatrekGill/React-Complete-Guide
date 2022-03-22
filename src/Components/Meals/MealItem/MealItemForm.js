@@ -1,25 +1,48 @@
-import React from "react";
-import Input from "../../UI/Input"
-
+import React, { useRef, useState } from "react";
+import Input from "../../UI/Input";
 
 import classes from "./MealItemForm.module.css";
 
+// refs can be used to hook the live value of a field to a variable
 const MealItemForm = (props) => {
-	return (
-		<form className={classes.form}>
-			<Input
-				label="Amount"
-				input={{
-					id: 'amount' + props.data.id,
-					type: "number",
-					min: "1",
-					max: "5",
-					defaultValue: "1"
-				}}
-			></Input>
-			<button>+ Add</button>
-		</form>
-	);
+    const [amountIsValid, setAmountIsValid] = useState(true);
+
+    const amountInputRef = useRef();
+
+    const submitHandler = (event) => {
+        event.preventDefault();
+
+        const enteredAmount = amountInputRef.current.value;
+        const enteredAmountNumber = +enteredAmount;
+        if (
+            enteredAmount.trim().length === 0 ||
+            enteredAmountNumber < 1 ||
+            enteredAmountNumber > 5
+        ) {
+            setAmountIsValid(false);
+            return;
+        }
+
+        props.onAddToCart(enteredAmountNumber);
+    };
+
+    return (
+        <form onSubmit={submitHandler} className={classes.form}>
+            <Input
+                ref={amountInputRef}
+                label="Amount"
+                input={{
+                    id: "amount" + props.data.id,
+                    type: "number",
+                    min: "1",
+                    max: "5",
+                    defaultValue: "1",
+                }}
+            ></Input>
+            <button>+ Add</button>
+            {!amountIsValid && <p>Please enter a valid amount (1-5)</p>}
+        </form>
+    );
 };
 
 export default MealItemForm;

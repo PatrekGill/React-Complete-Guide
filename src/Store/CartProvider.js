@@ -10,18 +10,29 @@ const defaultCartState = {
 // eventhandler code
 const cartReducer = (state, action) => {
     if (action.type === "ADD") {
+		console.log("adding item:");
+		console.log(action.item);
         const item = action.item;
-        const existingItem = state.items.find(
+        const existingItemIndex = state.items.findIndex(
             (element) => element.id === item.id
         );
+		
 
-        let updatedItems = state.items;
-        if (existingItem) {
-            existingItem.amount++;
+		let updatedItems;
+        if (existingItemIndex >= 0) {
+			updatedItems = [...state.items];
+			
+			const existingItem = state.items.at(existingItemIndex);
+			updatedItems[existingItemIndex] = {
+				...existingItem,
+				amount: existingItem.amount + action.item.amount
+			}
+
         } else {
-            updatedItems = state.items.concat(action.item);
+			updatedItems = state.items.concat(action.item);
+			
         }
-
+		
         const updatedTotalAmount =
             state.totalAmount + action.item.price * action.item.amount;
 

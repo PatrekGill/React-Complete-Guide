@@ -22,10 +22,7 @@ const Cart = (props) => {
         return (
             <CartItem
                 key={item.id}
-                id={item.id}
-                name={item.name}
-                amount={item.amount}
-                price={item.price}
+				item={item}
             />
         );
     });

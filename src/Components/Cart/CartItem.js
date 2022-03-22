@@ -5,28 +5,27 @@ import CartContext from "../../Store/cart-context";
 
 const CartItem = (props) => {
 	const cartCtx = useContext(CartContext);
-    const price = (props.price * props.amount).toFixed(2);
+	const item = props.item;
+    const price = (item.price * item.amount).toFixed(2);
 
 	const addItemHandler = () => {
 		cartCtx.addItem({
-			name: props.name,
-			amount: 1,
-			id: props.id,
-			price: props.price
+			...item,
+			amount: 1
 		});
 	};
 
 	const removeItemHandler = () => {
-		cartCtx.removeItem(props.id);
+		cartCtx.removeItem(item.id);
 	};
 
     return (
         <li className={classes["cart-item"]}>
             <div>
-                <h2>{props.name}</h2>
+                <h2>{item.name}</h2>
                 <div className={classes.summary}>
                     <span className={classes.price}>$ {price}</span>
-                    <span className={classes.amount}>X {props.amount}</span>
+                    <span className={classes.amount}>X {item.amount}</span>
                 </div>
             </div>
             <div className={classes.actions}>

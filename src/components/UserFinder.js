@@ -1,10 +1,10 @@
 import { Fragment, useState, useEffect, Component } from "react";
 
+import ErrorBoundary from "./ErrorBoundary"
 import Users from "./Users";
 import UsersContext from "../store/users-context";
 
 import classes from "./UserFinder.module.css";
-
 
 // const DUMMY_USERS = [
 //     { id: "u1", name: "Max" },
@@ -13,10 +13,10 @@ import classes from "./UserFinder.module.css";
 // ];
 
 class UserFinder extends Component {
-	static contextType = UsersContext;
+    static contextType = UsersContext;
 
     constructor() {
-		super();
+        super();
 
         this.state = {
             filteredUsers: [],
@@ -24,22 +24,20 @@ class UserFinder extends Component {
         };
     }
 
-	componentDidMount() {
-		this.setState({
-			filteredUsers: this.context.users
-		})
-	}
+    componentDidMount() {
+        this.setState({
+            filteredUsers: this.context.users,
+        });
+    }
 
     componentDidUpdate(prevProps, prevState) {
-		if (prevState.searchTerm !== this.state.searchTerm) {
-			this.setState({
-				filteredUsers: this.context.users.filter((user) =>
-					user.name.includes(this.state.searchTerm)
-				),
-			});
-			
-		}
-
+        if (prevState.searchTerm !== this.state.searchTerm) {
+            this.setState({
+                filteredUsers: this.context.users.filter((user) =>
+                    user.name.includes(this.state.searchTerm)
+                ),
+            });
+        }
     }
 
     searchChangeHandler(event) {
@@ -57,7 +55,9 @@ class UserFinder extends Component {
                         onChange={this.searchChangeHandler.bind(this)}
                     />
                 </div>
-                <Users users={this.state.filteredUsers} />
+                <ErrorBoundary>
+                    <Users users={this.state.filteredUsers} />
+                </ErrorBoundary>
             </Fragment>
         );
     }

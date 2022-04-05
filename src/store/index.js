@@ -23,3 +23,6 @@ const counterSubscriber = () => {
 };
 
 store.subscribe(counterSubscriber);
+
+
+export default store;

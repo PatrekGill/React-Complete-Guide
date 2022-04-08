@@ -4,6 +4,7 @@ const initialState = {
     total: 0,
     isCartOpen: false,
     cartItems: [],
+	numberOfItems: 0
 };
 
 const cartSlice = createSlice({
@@ -18,10 +19,9 @@ const cartSlice = createSlice({
         },
         addItemToCart(state, action) {
             const payloadItem = action.payload;
-            console.log(payloadItem);
             state.total = state.total + payloadItem.price * payloadItem.amount;
-			console.log(state.total);
-			
+			state.numberOfItems += payloadItem.amount;
+
             const cartItems = state.cartItems;
             const existingCartItemIndex = cartItems.findIndex(
                 (item) => item.id === payloadItem.id
@@ -49,6 +49,7 @@ const cartSlice = createSlice({
             if (existingCartItem) {
                 state.total =
                     state.total - payloadItem.price * payloadItem.amount;
+				state.numberOfItems -= payloadItem.amount;
 
                 if (existingCartItem.amount === 1) {
                     cartItems.splice(existingCartItemIndex, 1);

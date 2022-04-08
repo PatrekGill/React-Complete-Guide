@@ -3,7 +3,6 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 
-// can show/hide cart by clicking on the cart button
 // products are added to cart when clicking on the "add to cart" button
 // product count is increases/decreased when adding/removing from cart
 // cart +/- buttons also increase or decrease the amount of items and eventually can remove and item

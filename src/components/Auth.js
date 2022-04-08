@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import classes from "./Auth.module.css";
-import { authActions } from "../store/index";
+import { authActions } from "../store/auth";
 import { Fragment } from "react";
 
 const Auth = () => {
